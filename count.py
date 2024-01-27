@@ -4,19 +4,44 @@ import random
 import math
 import datetime
 
+NUMBER = 1
+LETTER = 2
+
+dotVals = {
+    1:"one",
+    2:"two",
+    3:"three",
+    4:"four",
+    5:"five",
+    6:"six",
+    7:"seven",
+    8:"eight",
+    9:"nine",
+    10:"ten"
+}
+
 class numberDot:
     radius = 40
-    def __init__(self, surface: pygame.Surface, num: int):
+    def __init__(self, surface: pygame.Surface, num:int, type: int):
         self.surface = surface
         self.x = random.randint(numberDot.radius, surface.get_width()-numberDot.radius)
         self.y = random.randint(numberDot.radius, surface.get_height()-numberDot.radius)
         self.num = num
-        pass
+        self.type = type
+        if(type == NUMBER):
+            self.text = num
+        else:
+            self.text = dotVals.get(num)
+        
 
     def draw(self):
         pygame.draw.circle(self.surface, (255, 0, 0), (self.x, self.y), numberDot.radius)
-        font = pygame.font.SysFont(None, 40)
-        num = font.render(str(self.num), True, 'white')
+        if self.type == NUMBER:
+            textSize = 40
+        else:
+            textSize = 30
+        font = pygame.font.SysFont(None, textSize)
+        num = font.render(str(self.text), True, 'white')
         self.surface.blit(num, (self.x-20, self.y-10))
         pass
     
@@ -29,14 +54,14 @@ class numberDot:
 
 class game:
 
-    def __init__(self, surface):
+    def __init__(self, surface, type):
         self.surface = surface
         self.lost = False
         self.currentNum = 1
         self.dots = []
         self.score = 0
         for i in range(1, 11):
-            self.dots.append(numberDot(surface, i))
+            self.dots.append(numberDot(surface, i, type))
             pass
         self.clock = pygame.time.Clock()
     
@@ -74,6 +99,3 @@ class game:
         font = pygame.font.SysFont(None, 40)
         num = font.render("Score: {score}".format(score = self.score), True, 'black')
         self.surface.blit(num, (20, self.surface.get_height()-40))
-        pass
-
-

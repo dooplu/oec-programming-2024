@@ -17,7 +17,7 @@ while running:
     # fill the screen with a color to wipe away anything from last frame
     screen.fill("white")
 
-    c = count.game(screen)
+    c = count.game(screen, count.LETTER)
     c.loop()
     if c.lost:
         running = False
