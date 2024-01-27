@@ -1,4 +1,5 @@
 import pygame
+import count
 
 pygame.init()
 screen = pygame.display.set_mode((1280, 720))
@@ -16,7 +17,10 @@ while running:
     # fill the screen with a color to wipe away anything from last frame
     screen.fill("white")
 
-    # RENDER YOUR GAME HERE
+    c = count.game(screen)
+    c.loop()
+    if c.lost:
+        running = False
 
     # flip() the display to put your work on screen
     pygame.display.flip()
