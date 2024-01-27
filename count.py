@@ -3,6 +3,7 @@ from pygame.locals import *
 import random
 import math
 import datetime
+import time
 
 NUMBER = 1
 LETTER = 2
@@ -68,22 +69,28 @@ class game:
     def loop(self):
         screen = self.surface
         
+        # main loop
         while self.lost  == False:
             screen.fill('white')
+
+            if len(self.dots) == 0:
+                break
 
             # event handling
             for event in pygame.event.get():
                 if event.type == QUIT:
                     self.lost = True
+                    # when the user has clicked
                 if event.type == MOUSEBUTTONDOWN:
-                    for dot in self.dots:
+                    for dot in self.dots: # find the dot he clicked on
                         if dot.isClicked(pygame.mouse.get_pos()):
-                            if(dot.num == self.currentNum):
+                            if(dot.num == self.currentNum): # verify if he clicked on the correct one
                                 self.score += 10
                                 self.currentNum += 1
                             else:
                                 self.lost = True
-                                f = open("scores/score.txt", "a") # save score
+                                # save score to a text file
+                                f = open("scores/score.txt", "a") 
                                 # https://stackoverflow.com/questions/7999935/python-datetime-to-string-without-microsecond-component
                                 f.write("{date}: {score}\n".format(date=datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), score=self.score))
                             self.dots.remove(dot)
@@ -92,8 +99,28 @@ class game:
             for dot in self.dots:
                 dot.draw()
              
-            self.displayScore()
-            pygame.display.flip() 
+            self.displayScore() # we draw the score after the dots so the score doesnt get hidden
+            pygame.display.flip()
+        
+        # win screen
+        if self.lost == False:
+            screen.fill("white")
+            font = pygame.font.SysFont(None, 60)
+            text = font.render("Good job!", True, 'green')
+            self.surface.blit(text, (screen.get_width()/2, screen.get_height()/2))
+            pygame.display.flip()
+            time.sleep(3)
+            return
+
+        # lose screen
+        screen.fill("white")
+        font = pygame.font.SysFont(None, 60)
+        text = font.render("Try again next time!\n Score: {score}".format(score=self.score), True, 'green')
+        self.surface.blit(text, (screen.get_width()/2, screen.get_height()/2))
+        pygame.display.flip()
+        time.sleep(3)
+            
+
     
     def displayScore(self):
         font = pygame.font.SysFont(None, 40)

@@ -126,7 +126,7 @@ env/
 venv/
 ENV/
 env.bak/
-scores/
+scores/*
 venv.bak/
 
 # Spyder project settings
