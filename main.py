@@ -1,26 +1,26 @@
 import pygame
+from game import Game
 
-pygame.init()
-screen = pygame.display.set_mode((1280, 720))
-clock = pygame.time.Clock()
-running = True
+SCREEN_WIDTH = 640
+SCREEN_HEIGHT = 480
 
+def main():
 
-while running:
-    # poll for events
-    # pygame.QUIT event means the user clicked X to close your window
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
+    pygame.init()
+    screen = pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT))
+    pygame.display.set_caption("Math Wizard")
+    done = False
+    clock = pygame.time.Clock()
+    game = Game()
 
-    # fill the screen with a color to wipe away anything from last frame
-    screen.fill("white")
+    # -------- Main Program Loop -----------
+    while not done:
+        done = game.process_events()
+        game.run_logic()
+        game.display_frame(screen)
+        clock.tick(30)
 
-    # RENDER YOUR GAME HERE
+    pygame.quit()
 
-    # flip() the display to put your work on screen
-    pygame.display.flip()
-
-    clock.tick(60)  # limits FPS to 60
-
-pygame.quit()
+if __name__ == '__main__':
+    main()
