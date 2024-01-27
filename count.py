@@ -2,6 +2,7 @@ import pygame
 from pygame.locals import *
 import random
 import math
+import datetime
 
 class numberDot:
     radius = 40
@@ -44,6 +45,8 @@ class game:
         
         while self.lost  == False:
             screen.fill('white')
+
+            # event handling
             for event in pygame.event.get():
                 if event.type == QUIT:
                     self.lost = True
@@ -55,6 +58,9 @@ class game:
                                 self.currentNum += 1
                             else:
                                 self.lost = True
+                                f = open("scores/score.txt", "a") # save score
+                                # https://stackoverflow.com/questions/7999935/python-datetime-to-string-without-microsecond-component
+                                f.write("{date}: {score}\n".format(date=datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), score=self.score))
                             self.dots.remove(dot)
             
 
