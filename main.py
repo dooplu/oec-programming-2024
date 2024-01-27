@@ -17,10 +17,6 @@ while running:
     # fill the screen with a color to wipe away anything from last frame
     screen.fill("white")
 
-    c = count.game(screen, count.LETTER)
-    c.loop()
-    if c.lost:
-        running = False
 
     # flip() the display to put your work on screen
     pygame.display.flip()
