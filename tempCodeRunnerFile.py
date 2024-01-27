@@ -1,0 +1,1 @@
+game.display_frame(screen)

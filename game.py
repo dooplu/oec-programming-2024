@@ -19,14 +19,13 @@ class Game(object):
         # arithmetic problem
         self.problem = {"num1":0,"num2":0,"result":0}
         # Create a variable that will hold the name of the operation
-        self.operation = ""
         self.button_list = self.get_button_list()
         # Create boolean that will be true when clicked on the mouse button
         # This is because we have to wait some frames to be able to show
         # the rect green or red.
         self.reset_problem = False
         # Create menu
-        items = ("Addition","Subtraction","Multiplication","Division")
+        items = ("Addition")
         self.menu = Menu(items,font_size=50)
         self.show_menu = True
         self.score = 0
