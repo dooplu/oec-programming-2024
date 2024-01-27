@@ -33,6 +33,7 @@ class game:
         self.lost = False
         self.currentNum = 1
         self.dots = []
+        self.score = 0
         for i in range(1, 11):
             self.dots.append(numberDot(surface, i))
             pass
@@ -45,22 +46,28 @@ class game:
             screen.fill('white')
             for event in pygame.event.get():
                 if event.type == QUIT:
-                    self.lost = ~self.lost
+                    self.lost = True
                 if event.type == MOUSEBUTTONDOWN:
                     for dot in self.dots:
                         if dot.isClicked(pygame.mouse.get_pos()):
+                            if(dot.num == self.currentNum):
+                                self.score += 10
+                                self.currentNum += 1
+                            else:
+                                self.lost = True
                             self.dots.remove(dot)
             
 
             for dot in self.dots:
                 dot.draw()
              
+            self.displayScore()
             pygame.display.flip() 
-
-    def nextNum(self):
+    
+    def displayScore(self):
+        font = pygame.font.SysFont(None, 40)
+        num = font.render("Score: {score}".format(score = self.score), True, 'black')
+        self.surface.blit(num, (20, self.surface.get_height()-40))
         pass
-
-    def getNum(self) -> int:
-        return self.getNum
 
 
